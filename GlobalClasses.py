@@ -12,6 +12,10 @@ class GlobalContext:
     openai_param_n = 1
     openai_param_timeout = 60
     openai_param_presence_penalty = 0
+    ENABLE_VOICE = True
+    ENABLE_TRANSLATION = True
+    SHOW_SINGLE_TURN_QA = True
+    SHOW_CHAT_BACKUP_AND_SETTINGS = False  # OpenAI parameter adjustment has not been integrated into QAchat yet
     cognitive_subscription = ""  # set by __init__ # your cognitive subscription key
     cognitive_region = "chinaeast2"  # your cognitive region
     txt_translate_key = ""  # set by __init__ # your cognitive translation key
@@ -24,7 +28,9 @@ class GlobalContext:
     chat_system_message_plain = ""
     chat_system_message = ""
     chat_history = []
+    KEEP_CHAT_HISTORY_TURN = 3
     chat_prompt = ""
+    TOTAL_TOKENS_LIMIT_OF_ALL_DOCS_FOR_CHAIN = 2100
     chat_latest_return = ""
     message_for_read_out = ""
     user_message = ""
@@ -44,6 +50,5 @@ Instructions:
         # get environment variables set by .env file
         GlobalContext.OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
         GlobalContext.OPENAI_BASE = os.getenv("OPENAI_BASE")
-        GlobalContext.cognitive_subscription = os.getenv(
-            "cognitive_subscription")
+        GlobalContext.cognitive_subscription = os.getenv("cognitive_subscription")
         GlobalContext.txt_translate_key = os.getenv("txt_translate_key")

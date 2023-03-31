@@ -1,9 +1,9 @@
-from langchain.document_loaders import (
-    UnstructuredPowerPointLoader, UnstructuredWordDocumentLoader, PyPDFLoader)
+'''Create Vector Store from all documents in a folder, currently supports .pptx, .docx, .pdf files.'''
+
+from langchain.document_loaders import (UnstructuredPowerPointLoader, UnstructuredWordDocumentLoader, PyPDFLoader)
 import glob
 import langchain.text_splitter as text_splitter
-from langchain.text_splitter import (
-    RecursiveCharacterTextSplitter, CharacterTextSplitter)
+from langchain.text_splitter import (RecursiveCharacterTextSplitter, CharacterTextSplitter)
 import faiss
 from langchain.vectorstores import FAISS
 from langchain.embeddings import OpenAIEmbeddings
@@ -20,9 +20,11 @@ os.environ["OPENAI_API_VERSION"] = "2022-12-01"
 os.environ["OPENAI_API_BASE"] = GlobalContext.OPENAI_BASE
 os.environ["OPENAI_API_KEY"] = GlobalContext.OPENAI_API_KEY
 
+ENGLISH_CHUCK_SIZE = 1000
+CHINESE_CHUNK_SIZE = 500
 
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=500, chunk_overlap=0)  # chunk_overlap=30
+    chunk_size=ENGLISH_CHUCK_SIZE, chunk_overlap=0)  # chunk_overlap=30
 
 files = glob.glob("Doc_Store/*.*")
 
@@ -50,7 +52,6 @@ for p in files:
 
 print(len(all_docs))
 
-# Here we create a vector store from the documents and save it to disk.
 store = FAISS.from_documents(all_docs, OpenAIEmbeddings(chunk_size=1))
 
 faiss.write_index(store.index, "./Doc_Store/vectorDB.index")
