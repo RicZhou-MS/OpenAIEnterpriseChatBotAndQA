@@ -1,4 +1,7 @@
-"""Load question answering chains."""
+'''
+Duplicate partial of the code from LangChain for customization on top of LangChain
+'''
+
 from typing import Any, Mapping, Optional, Protocol
 
 from langchain.callbacks.base import BaseCallbackManager

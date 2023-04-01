@@ -1,3 +1,7 @@
+'''
+Duplicate partial of the code from LangChain for customization on top of LangChain
+'''
+
 from __future__ import annotations
 
 import warnings
@@ -10,6 +14,9 @@ from pydantic import BaseModel, Extra, Field, root_validator
 # from langchain.chains.base import Chain
 # from langchain.chains.combine_documents.base import BaseCombineDocumentsChain
 from langchain.chains.combine_documents.stuff import StuffDocumentsChain
+from langchain.chains.combine_documents.map_reduce import MapReduceDocumentsChain
+from langchain.chains.combine_documents.map_rerank import MapRerankDocumentsChain
+from langchain.chains.combine_documents.refine import RefineDocumentsChain
 from langchain.chains.conversational_retrieval.prompts import CONDENSE_QUESTION_PROMPT
 from langchain.chains.conversational_retrieval.base import BaseConversationalRetrievalChain
 from langchain.chains.llm import LLMChain
@@ -34,7 +41,7 @@ class CustomConversationalRetrievalChain(BaseConversationalRetrievalChain, BaseM
         num_docs = len(docs)
 
         # if self.max_tokens_limit and isinstance(self.combine_docs_chain, StuffDocumentsChain):
-        if self.max_tokens_limit > 0:
+        if self.max_tokens_limit > 0 and (isinstance(self.combine_docs_chain, StuffDocumentsChain) or isinstance(self.combine_docs_chain, RefineDocumentsChain)):
             tokens = [
                 # self.combine_docs_chain.llm_chain.llm.get_num_tokens(doc.page_content)
                 get_rough_token_len(doc.page_content)
@@ -48,6 +55,7 @@ class CustomConversationalRetrievalChain(BaseConversationalRetrievalChain, BaseM
         return docs[:num_docs]
 
     def _get_docs(self, question: str, inputs: Dict[str, Any]) -> List[Document]:
+        print(f"\n[New question] {question}\n")
         docs = self.retriever.get_relevant_documents(question)
         return self._reduce_tokens_below_limit(docs)
 

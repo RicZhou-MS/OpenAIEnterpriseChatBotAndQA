@@ -1,23 +1,16 @@
 '''
-Created on 2013-3-7 common helper
+Common helper
+
+Created by Ric Zhou on 2023-03-27
 '''
-# import faiss
-# from langchain.llms import AzureOpenAI
-# from langchain.chains import (ChatVectorDBChain, VectorDBQAWithSourcesChain)
-# import pickle
-# import gradio as gr
-# import os
+
 import tiktoken
 import azure.cognitiveservices.speech as speechsdk
 import requests
 import uuid
 import json
-# from dotenv import load_dotenv
 
 from GlobalClasses import GlobalContext
-
-# load_dotenv()
-# GlobalContext()  # initialize global context
 
 
 def language_translate(source_txt, to_language):

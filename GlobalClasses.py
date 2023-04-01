@@ -1,7 +1,14 @@
+'''
+GlobalContext class is used to store global variables
+
+Created by Ric Zhou on 2023-03-27
+'''
+
 import os
 
 
 class GlobalContext:
+    VECTOR_DB_PATH = "./Doc_Store"
     OPENAI_API_KEY = ""  # set by __init__ # your Azure openai api key
     OPENAI_BASE = ""  # set by __init__ , e.g. "https://<your_azure_open_ai>.openai.azure.com"
     MY_CHATGPT_ENGINE = "gpt-35-turbo"
@@ -30,7 +37,7 @@ class GlobalContext:
     chat_history = []
     KEEP_CHAT_HISTORY_TURN = 3
     chat_prompt = ""
-    TOTAL_TOKENS_LIMIT_OF_ALL_DOCS_FOR_CHAIN = 2100
+    TOTAL_TOKENS_LIMIT_OF_ALL_DOCS_FOR_CHAIN = 2100  # 3050
     chat_latest_return = ""
     message_for_read_out = ""
     user_message = ""
@@ -39,10 +46,10 @@ class GlobalContext:
     need_translate = False
     original_sound_text = ""
     # system_plain_message = '''Assistant is an intelligent chatbot designed to help users answer any questions, and also able to access internet to retrieve content for analysis and giving advice'''
-    system_plain_message = '''Assistant is an intelligent chatbot designed to help users answer consumer product related questions and sell P&G products. 
+    system_plain_message = '''Assistant is an intelligent chatbot designed to help users answer consumer product related questions and sell <your famous company> products. 
 Instructions:
-- Only answer questions related to Procter & Gamble. 
-- If you're unsure of an answer, you can say "I don't know" or "I'm not sure" and recommend users go to the P&G website for more information.'''
+- Only answer questions related to <your famous company>. 
+- If you're unsure of an answer, you can say "I don't know" or "I'm not sure" and recommend users go to the <your famous company> website for more information,don't try to make up an answer.'''
     system_message = "<|im_start|>system\n{}\n<|im_end|>".format(
         system_plain_message.replace("\n", "\\n"))
 

@@ -1,13 +1,15 @@
-'''Create Vector Store from all documents in a folder, currently supports .pptx, .docx, .pdf files.'''
+'''
+Create Vector Store from all documents in a folder, currently supports .pptx, .docx, .pdf files.
+
+Created by Ric Zhou on 2021-03-27
+'''
 
 from langchain.document_loaders import (UnstructuredPowerPointLoader, UnstructuredWordDocumentLoader, PyPDFLoader)
 import glob
 import langchain.text_splitter as text_splitter
 from langchain.text_splitter import (RecursiveCharacterTextSplitter, CharacterTextSplitter)
-import faiss
 from langchain.vectorstores import FAISS
 from langchain.embeddings import OpenAIEmbeddings
-import pickle
 from GlobalClasses import GlobalContext
 from dotenv import load_dotenv
 import os
@@ -24,9 +26,9 @@ ENGLISH_CHUCK_SIZE = 1000
 CHINESE_CHUNK_SIZE = 500
 
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=ENGLISH_CHUCK_SIZE, chunk_overlap=0)  # chunk_overlap=30
+    chunk_size=CHINESE_CHUNK_SIZE, chunk_overlap=0)  # chunk_overlap=30
 
-files = glob.glob("Doc_Store/*.*")
+files = glob.glob(f"{GlobalContext.VECTOR_DB_PATH}/*.*")
 
 all_docs = []
 for p in files:
@@ -52,9 +54,7 @@ for p in files:
 
 print(len(all_docs))
 
-store = FAISS.from_documents(all_docs, OpenAIEmbeddings(chunk_size=1))
+# vectorstore = FAISS.from_documents(all_docs, OpenAIEmbeddings(chunk_size=1, document_model_name="text-search-curie-doc-001", query_model_name="text-search-curie-query-001")) # text-search-curie-*-001 performance is worse than text-embedding-ada-002
+vectorstore = FAISS.from_documents(all_docs, OpenAIEmbeddings(chunk_size=1))
 
-faiss.write_index(store.index, "./Doc_Store/vectorDB.index")
-store.index = None
-with open("./Doc_Store/vectorDB.pkl", "wb") as f:
-    pickle.dump(store, f)
+FAISS.save_local(vectorstore, GlobalContext.VECTOR_DB_PATH)
