@@ -7,7 +7,7 @@ OpenAI Enterprise knowledge search ChatBot and QA
 ```
 pip install -r ./requirements.txt
 ```
-3. Create a .env file at the project folder, and insert all necessary environment variable (Azure OpenAI key and Azure Cognitive subscription key as well as Cognitive translation service key) as below example
+3. Create a .env file at the project folder, and insert all necessary environment variable as below example, for instance Azure OpenAI key, as well as Azure Cognitive speech subscription key and Cognitive translation service key, the last two are optional if you don't need speech and tranlation services.
 ```
 OPENAI_API_KEY=11234234324243234234234
 OPENAI_BASE=https://xyz.openai.azure.com
