@@ -7,7 +7,7 @@ This repo is made to use [Langchain](https://python.langchain.com/en/latest/gett
 ## Installation 
 1. Install Python runtime (This repo is developed with Python 3.11.2)
 2. Download and install [Microsoft Visual C++ Redistributable packages](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170&preserve-view=true#visual-studio-2015-2017-2019-and-2022) (choose X64 version if you setup inside windows VM on Azure)
-3. Clone the project onto local Windows, install the dependencies on your machine:
+3. Clone the project onto your local Windows, install the python dependencies:
 ```
 pip install -r ./requirements.txt
 ```
