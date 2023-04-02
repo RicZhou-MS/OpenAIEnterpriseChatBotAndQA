@@ -1,5 +1,5 @@
 # OpenAIEnterpriseChatBotAndQA
-This repor is made to use [Langchain](https://python.langchain.com/en/latest/getting_started/getting_started.html) to integrate vector search and Azure OpenAI to support Enterprise knowledge search as ChatBot scenario. 
+This repo is made to use [Langchain](https://python.langchain.com/en/latest/getting_started/getting_started.html) to integrate vector search and Azure OpenAI to support Enterprise knowledge search as ChatBot scenario. 
 
 ## High level architecture
 ![image](https://user-images.githubusercontent.com/75886466/229343379-ff315985-cad1-4e14-8ac3-3e6e69021a52.png)
@@ -7,7 +7,7 @@ This repor is made to use [Langchain](https://python.langchain.com/en/latest/get
 ## Installation 
 1. Install Python runtime (This repo is developed with Python 3.11.2)
 2. Download and install [Microsoft Visual C++ Redistributable packages](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170&preserve-view=true#visual-studio-2015-2017-2019-and-2022) (choose X64 version if you setup inside windows VM on Azure)
-3. Install the dependencies on your machine:
+3. Clone the project onto your local Windows, install the python dependencies:
 ```
 pip install -r ./requirements.txt
 ```
@@ -15,7 +15,7 @@ pip install -r ./requirements.txt
 5. [Deploy OpenAI models](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/how-to/create-resource?pivots=web-portal#deploy-a-model), deploy at least `text-embedding-ada-002` and `text-davinci-003`, and remember keep the deployment name same as model name, otherwise you need change the source code file `Enterprise_KB_Chatbot.py` and `Enterprise_KB_Ingest.py` accorddingly.
 6. (Optional) Create Azure speech service and get `SPEECH_KEY`, `SPEECH_REGION` according to [this KB](https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/get-started-speech-to-text?tabs=windows%2Cterminal&pivots=programming-language-csharp#prerequisites).
 7. (Optional) Create Azure cognitive translation service and get `TRANSLATOR_KEY`, `TRANSLATOR_LOCATION`, `TRANSLATOR_ENDPOINT` according to [this KB](https://learn.microsoft.com/en-us/azure/cognitive-services/translator/quickstart-translator?tabs=python#prerequisites).
-8. Clone the project onto your Windows, create a .env file at the project folder, and provide all necessary environment variables you get from above steps as below example. Azure Speech and Translator service keys are optional if you don't need speech and tranlation services integrated.
+8. Create a .env file at the project folder, and provide all necessary environment variables you get from above steps as below example. Azure Speech and Translator service keys are optional if you don't need speech and tranlation services integrated.
 ```
 OPENAI_API_KEY=00000000000000000000000000000000
 OPENAI_BASE=https://<youroai>.openai.azure.com
@@ -35,7 +35,7 @@ python ./Enterprise_KB_Ingest.py
 ```
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=ENGLISH_CHUCK_SIZE, chunk_overlap=0) 
 ```
-with
+to
 ```
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHINESE_CHUNK_SIZE, chunk_overlap=0) 
 ```
@@ -45,7 +45,7 @@ text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHINESE_CHUNK_SIZE, ch
 python ./Enterprise_KB_Chatbot.py
 ```
 2. Use local brower to access http://127.0.0.1:7860/
-3. If you want to make your application internate accessiable, change the last line code in `Enterprise_KB_Chatbot.py`
+3. If you want to make your application internet accessiable, change the last line of code in `Enterprise_KB_Chatbot.py`
 from
 ```
 demo.launch()
@@ -66,7 +66,8 @@ lc_chatbot = CustomConversationalRetrievalChain.from_llm(lc_chatbot_llm, vectors
 and change the **chain_type** to any of `stuff`, `refine`,`map-reduce` or `map-rerank`.
 
 ## Enable Speech and Translation
-speech and translation functions are disabled by default, if you have speech and translator API key configured at beginning, you use follow approach to enable
+speech and translation functions are disabled by default, if you have speech and translator API key configured at beginning, you can use following approach to enable.
+
 Open `Enterprise_KB_Chatbot.py`, find following code
 ```
 GlobalContext.ENABLE_TRANSLATION = False 
