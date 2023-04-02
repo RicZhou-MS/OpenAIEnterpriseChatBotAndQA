@@ -23,6 +23,26 @@ TRANSLATOR_LOCATION=chinaeast2
 TRANSLATOR_ENDPOINT=https://api.translator.azure.cn/
 ```
 
+## Prepare VectorDB ingestion
+
+## Run chatbot
+1. Run following command at your project folder
+```
+python ./Enterprise_KB_Chatbot.py
+```
+2. Use local brower to access http://127.0.0.1:7860/
+3. If you want to make your application internate accessiable, change the last line code in `Enterprise_KB_Chatbot.py`
+from
+```
+demo.launch()
+```
+to
+```
+demo.launch(auth=("admin", "pass1234"), share=True)
+```
+then run your application, get the internet accessiable url which printed on the screen, you need keep your application running locally while have others access from this public URL. ( **NOTE**: internet url only available for maximum 72 hours)
+
+
 ## Interaction example for multi-turn conversation 
 ![image](https://user-images.githubusercontent.com/75886466/229332117-8b410405-007e-4a80-8d1b-ff2b4bf43bfd.png)
 ![image](https://user-images.githubusercontent.com/75886466/229334605-79464489-0166-4d83-a2dd-da41691d3f51.png)
