@@ -31,7 +31,8 @@ This repo has two demo documents at **Doc_Store** folder, you can replace with y
 ```
 python ./Enterprise_KB_Ingest.py
 ```
-Currently the VectorDB engine is FAISS, but for enterprise production use, it can be replaced by other Vector Database engines (e.g. `qdrant, weaviate, milvus, elastic` which are all supported by LangChain)
+Currently the VectorDB engine is FAISS, but for enterprise production use, it can be replaced by other Vector Database engines (e.g. `qdrant, weaviate, milvus, elastic` which are all [supported by LangChain](https://langchain.com/integrations.html))
+
 **NOTE: If your documents are Chinese version, it's recommended to replace following line code in `Enterprise_KB_Ingest.py` before re-build vector DB.**
 ```
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=ENGLISH_CHUCK_SIZE, chunk_overlap=0) 
