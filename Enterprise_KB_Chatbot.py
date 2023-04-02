@@ -202,9 +202,9 @@ def change_Openai_param(param_name, value):
 load_dotenv()
 GlobalContext()  # initialize global context
 
-GlobalContext.ENABLE_TRANSLATION = True  # you need to provide Azure Translator API key at GlobalContext before enable this feature
-GlobalContext.ENABLE_VOICE = True  # you need to provide Azure Speech API key at GlobalContext before enable this feature
-GlobalContext.SHOW_SINGLE_TURN_QA = True  # show single turn QA interactive UI
+GlobalContext.ENABLE_TRANSLATION = False  # you need to provide Azure Translator API key at GlobalContext before enable this feature
+GlobalContext.ENABLE_VOICE = False  # you need to provide Azure Speech API key at GlobalContext before enable this feature
+GlobalContext.SHOW_SINGLE_TURN_QA = False  # show single turn QA interactive UI
 
 os.environ["OPENAI_API_TYPE"] = "azure"
 os.environ["OPENAI_API_VERSION"] = "2022-12-01"
@@ -221,7 +221,7 @@ vectorstore = FAISS.load_local(GlobalContext.VECTOR_DB_PATH, OpenAIEmbeddings(ch
 lc_chatbot_llm = AzureOpenAI(temperature=0, deployment_name="text-davinci-003", model_name="text-davinci-003", max_tokens=800)
 
 lc_chatbot = CustomConversationalRetrievalChain.from_llm(lc_chatbot_llm, vectorstore.as_retriever(
-), condense_question_prompt=MyPromptCollection.CONDENSE_QUESTION_PROMPT, chain_type="refine")  # stuff , map_reduce, refine, map_rerank
+), condense_question_prompt=MyPromptCollection.CONDENSE_QUESTION_PROMPT, chain_type="stuff")  # stuff , map_reduce, refine, map_rerank
 # lc_chatbot.top_k_docs_for_context = 3
 lc_chatbot.max_tokens_limit = GlobalContext.TOTAL_TOKENS_LIMIT_OF_ALL_DOCS_FOR_CHAIN  # only take effect on 'stuff' and 'refine' chain type
 lc_chatbot.return_source_documents = True
@@ -233,7 +233,7 @@ if GlobalContext.SHOW_SINGLE_TURN_QA:  # disabled by default
     lc_qa_chain = VectorDBQAWithSourcesChain.from_chain_type(lc_qa_chain_llm, chain_type="refine", vectorstore=vectorstore, k=3)  # stuff , map_reduce, refine, map_rerank
     lc_qa_chain.reduce_k_below_max_tokens = True
     lc_qa_chain.max_tokens_limit = GlobalContext.TOTAL_TOKENS_LIMIT_OF_ALL_DOCS_FOR_CHAIN  # only take effect on 'stuff' chain type
-    lc_qa_chain.return_source_documents = False
+    lc_qa_chain.return_source_documents = True
 
 # Spin up web GUI
 

@@ -24,9 +24,10 @@ class GlobalContext:
     SHOW_SINGLE_TURN_QA = True
     SHOW_CHAT_BACKUP_AND_SETTINGS = False  # OpenAI parameter adjustment has not been integrated into QAchat yet
     cognitive_subscription = ""  # set by __init__ # your cognitive subscription key
-    cognitive_region = "chinaeast2"  # your cognitive region
+    cognitive_region = ""  # set by __init__ # your cognitive region
     txt_translate_key = ""  # set by __init__ # your cognitive translation key
-    txt_translate_endpoint = "https://api.translator.azure.cn"  # cognitive endpoint
+    txt_translate_location = ""  # set by __init__ # your cognitive translation location
+    txt_translate_endpoint = ""  # set by __init__  # cognitive endpoint
     txt_translate_to_languages = ['zh-Hans']  # ['zh-Hant', 'zh-Hans', 'en']
     speech_recognition_language = "zh-cn"  # "en-US"
     text_to_speech_language = "zh-CN-XiaoxiaoNeural"  # 'en-US-JennyNeural'
@@ -57,5 +58,8 @@ Instructions:
         # get environment variables set by .env file
         GlobalContext.OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
         GlobalContext.OPENAI_BASE = os.getenv("OPENAI_BASE")
-        GlobalContext.cognitive_subscription = os.getenv("cognitive_subscription")
-        GlobalContext.txt_translate_key = os.getenv("txt_translate_key")
+        GlobalContext.cognitive_subscription = os.getenv("SPEECH_KEY")
+        GlobalContext.cognitive_region = os.getenv("SPEECH_REGION")
+        GlobalContext.txt_translate_key = os.getenv("TRANSLATOR_KEY")
+        GlobalContext.txt_translate_location = os.getenv("TRANSLATOR_LOCATION")
+        GlobalContext.txt_translate_endpoint = os.getenv("TRANSLATOR_ENDPOINT")

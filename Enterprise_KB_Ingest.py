@@ -22,11 +22,11 @@ os.environ["OPENAI_API_VERSION"] = "2022-12-01"
 os.environ["OPENAI_API_BASE"] = GlobalContext.OPENAI_BASE
 os.environ["OPENAI_API_KEY"] = GlobalContext.OPENAI_API_KEY
 
-ENGLISH_CHUCK_SIZE = 1000
+ENGLISH_CHUCK_SIZE = 1400
 CHINESE_CHUNK_SIZE = 500
 
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=CHINESE_CHUNK_SIZE, chunk_overlap=0)  # chunk_overlap=30
+    chunk_size=ENGLISH_CHUCK_SIZE, chunk_overlap=0)  # chunk_overlap=30
 
 files = glob.glob(f"{GlobalContext.VECTOR_DB_PATH}/*.*")
 
