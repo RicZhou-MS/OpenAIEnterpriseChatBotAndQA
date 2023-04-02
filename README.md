@@ -1,5 +1,5 @@
 # OpenAIEnterpriseChatBotAndQA
-This repor is made to use [Langchain](https://python.langchain.com/en/latest/getting_started/getting_started.html) to integrate vector search and Azure OpenAI to support Enterprise knowledge search as ChatBot scenario. 
+This repo is made to use [Langchain](https://python.langchain.com/en/latest/getting_started/getting_started.html) to integrate vector search and Azure OpenAI to support Enterprise knowledge search as ChatBot scenario. 
 
 ## High level architecture
 ![image](https://user-images.githubusercontent.com/75886466/229343379-ff315985-cad1-4e14-8ac3-3e6e69021a52.png)
