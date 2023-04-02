@@ -62,6 +62,24 @@ lc_chatbot = CustomConversationalRetrievalChain.from_llm(lc_chatbot_llm, vectors
 ```
 and change the **chain_type** to any of `stuff`, `refine`,`map-reduce` or `map-rerank`.
 
+## Enable Speech and Translation
+speech and translation functions are disabled by default, if you have speech and translator API key configured at beginning, you use follow approach to enable
+Open `Enterprise_KB_Chatbot.py`, find following code
+```
+GlobalContext.ENABLE_TRANSLATION = False 
+GlobalContext.ENABLE_VOICE = False  
+```
+and change to
+```
+GlobalContext.ENABLE_TRANSLATION = True 
+GlobalContext.ENABLE_VOICE = True  
+```
+run the application, you will see the web page changed to below capture (**Note** speech only works when you run the application locally)
+![image](https://user-images.githubusercontent.com/75886466/229342647-e6b60727-1476-4c00-80e0-193b87dd3a7f.png)
+
+
+## Enable single turn Q&A
+
 ## Interaction example for multi-turn conversation 
 ![image](https://user-images.githubusercontent.com/75886466/229332117-8b410405-007e-4a80-8d1b-ff2b4bf43bfd.png)
 ![image](https://user-images.githubusercontent.com/75886466/229334605-79464489-0166-4d83-a2dd-da41691d3f51.png)
