@@ -3,14 +3,16 @@ OpenAI Enterprise knowledge search ChatBot and QA
 
 ## Installation 
 1. Install Python runtime (This repo is developed with Python 3.11.2)
-2. Download and install [Microsoft Visual C++ Redistributable packages](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170&preserve-view=true#visual-studio-2015-2017-2019-and-2022)
+2. Download and install [Microsoft Visual C++ Redistributable packages](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170&preserve-view=true#visual-studio-2015-2017-2019-and-2022) (choose X64 version if you setup inside windows VM on Azure)
 3. Install the dependencies on your machine:
 ```
 pip install -r ./requirements.txt
 ```
-4. (Optional) Create Azure speech service and get SPEECH_KEY, SPEECH_REGION according to [this KB](https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/get-started-speech-to-text?tabs=windows%2Cterminal&pivots=programming-language-csharp#prerequisites).
-5. (Optional) Create Azure cognitive translation service and get TRANSLATOR_KEY, TRANSLATOR_LOCATION, TRANSLATOR_ENDPOINT according to [this KB](https://learn.microsoft.com/en-us/azure/cognitive-services/translator/quickstart-translator?tabs=python#prerequisites).
-6. Create a .env file at the project folder, and insert all necessary environment variable as below example, for instance Azure OpenAI key, as well as Azure Cognitive speech subscription key and Cognitive translation service key, the last two are optional if you don't need speech and tranlation services.
+4. Create your Azure OpenAI service and get your `OPENAI_API_BASE` and `OPENAI_API_KEY`.
+5. [Deploy OpenAI models](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/how-to/create-resource?pivots=web-portal#deploy-a-model), deploy at least `text-embedding-ada-002` and `text-davinci-003`, and remember keep the deployment name same as model name, otherwise you need change the source code file `Enterprise_KB_Chatbot.py` and `Enterprise_KB_Ingest.py` accorddingly.
+6. (Optional) Create Azure speech service and get `SPEECH_KEY`, `SPEECH_REGION` according to [this KB](https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/get-started-speech-to-text?tabs=windows%2Cterminal&pivots=programming-language-csharp#prerequisites).
+7. (Optional) Create Azure cognitive translation service and get `TRANSLATOR_KEY`, `TRANSLATOR_LOCATION`, `TRANSLATOR_ENDPOINT` according to [this KB](https://learn.microsoft.com/en-us/azure/cognitive-services/translator/quickstart-translator?tabs=python#prerequisites).
+8. Clone the project onto your Windows, create a .env file at the project folder, and provide all necessary environment variables you get from above steps as below example. Azure Speech and Translator service keys are optional if you don't need speech and tranlation services integrated.
 ```
 OPENAI_API_KEY=00000000000000000000000000000000
 OPENAI_BASE=https://<youroai>.openai.azure.com
