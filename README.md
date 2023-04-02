@@ -35,7 +35,7 @@ python ./Enterprise_KB_Ingest.py
 ```
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=ENGLISH_CHUCK_SIZE, chunk_overlap=0) 
 ```
-with
+to
 ```
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHINESE_CHUNK_SIZE, chunk_overlap=0) 
 ```
@@ -66,7 +66,8 @@ lc_chatbot = CustomConversationalRetrievalChain.from_llm(lc_chatbot_llm, vectors
 and change the **chain_type** to any of `stuff`, `refine`,`map-reduce` or `map-rerank`.
 
 ## Enable Speech and Translation
-speech and translation functions are disabled by default, if you have speech and translator API key configured at beginning, you use follow approach to enable
+speech and translation functions are disabled by default, if you have speech and translator API key configured at beginning, you can use following approach to enable.
+
 Open `Enterprise_KB_Chatbot.py`, find following code
 ```
 GlobalContext.ENABLE_TRANSLATION = False 
