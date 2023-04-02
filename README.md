@@ -54,7 +54,7 @@ demo.launch(auth=("admin", "pass1234"), share=True)
 then run your application, get the internet accessiable url which printed on the screen, you need keep your application running locally while have others access from this public URL. ( **NOTE**: internet url only available for maximum 72 hours)
 
 ## How to change chain type
-This demo relies on [LangChain](https://python.langchain.com/en/latest/) , you can change the [chain type](https://python.langchain.com/en/latest/modules/chains/index_examples/qa_with_sources.html) according to your needs.
+This project relies on [LangChain](https://python.langchain.com/en/latest/) , you can change the [chain type](https://python.langchain.com/en/latest/modules/chains/index_examples/qa_with_sources.html) according to your needs.
 open `Enterprise_KB_Chatbot.py`, find follwing line
 ```
 lc_chatbot = CustomConversationalRetrievalChain.from_llm(lc_chatbot_llm, vectorstore.as_retriever(
