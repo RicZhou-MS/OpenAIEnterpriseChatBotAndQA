@@ -8,13 +8,17 @@ OpenAI Enterprise knowledge search ChatBot and QA
 ```
 pip install -r ./requirements.txt
 ```
-3. Create a .env file at the project folder, and insert all necessary environment variable as below example, for instance Azure OpenAI key, as well as Azure Cognitive speech subscription key and Cognitive translation service key, the last two are optional if you don't need speech and tranlation services.
+4. (Optional) Create Azure speech service and get SPEECH_KEY, SPEECH_REGION according to [this KB](https://learn.microsoft.com/en-us/azure/cognitive-services/speech-service/get-started-speech-to-text?tabs=windows%2Cterminal&pivots=programming-language-csharp#prerequisites).
+5. (Optional) Create Azure cognitive translation service and get TRANSLATOR_KEY, TRANSLATOR_LOCATION, TRANSLATOR_ENDPOINT according to [this KB](https://learn.microsoft.com/en-us/azure/cognitive-services/translator/quickstart-translator?tabs=python#prerequisites).
+6. Create a .env file at the project folder, and insert all necessary environment variable as below example, for instance Azure OpenAI key, as well as Azure Cognitive speech subscription key and Cognitive translation service key, the last two are optional if you don't need speech and tranlation services.
 ```
-OPENAI_API_KEY=11234234324243234234234
-OPENAI_BASE=https://xyz.openai.azure.com
-cognitive_subscription=600342343242343243243247
-txt_translate_key=ba234324234werwef3fwefwefw
-
+OPENAI_API_KEY=00000000000000000000000000000000
+OPENAI_BASE=https://<youroai>.openai.azure.com
+SPEECH_KEY=00000000000000000000000000000000
+SPEECH_REGION=chinaeast2
+TRANSLATOR_KEY=00000000000000000000000000000000
+TRANSLATOR_LOCATION=chinaeast2
+TRANSLATOR_ENDPOINT=https://api.translator.azure.cn/
 ```
 
 ## Interaction example for multi-turn conversation 
