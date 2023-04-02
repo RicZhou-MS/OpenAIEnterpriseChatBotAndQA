@@ -42,6 +42,14 @@ demo.launch(auth=("admin", "pass1234"), share=True)
 ```
 then run your application, get the internet accessiable url which printed on the screen, you need keep your application running locally while have others access from this public URL. ( **NOTE**: internet url only available for maximum 72 hours)
 
+## How to change chain type
+This demo relies on [LangChain](https://python.langchain.com/en/latest/) , you can change the [chain type](https://python.langchain.com/en/latest/modules/chains/index_examples/qa_with_sources.html) according to your needs.
+open `Enterprise_KB_Chatbot.py`, find follwing line
+```
+lc_chatbot = CustomConversationalRetrievalChain.from_llm(lc_chatbot_llm, vectorstore.as_retriever(
+), condense_question_prompt=MyPromptCollection.CONDENSE_QUESTION_PROMPT, chain_type="stuff") 
+```
+and change the **chain_type** to any of `stuff`, `refine`,`map-reduce` or `map-rerank`.
 
 ## Interaction example for multi-turn conversation 
 ![image](https://user-images.githubusercontent.com/75886466/229332117-8b410405-007e-4a80-8d1b-ff2b4bf43bfd.png)
