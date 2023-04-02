@@ -19,7 +19,7 @@ def language_translate(source_txt, to_language):
 
     # location, also known as region.
     # required if you're using a multi-service or regional (not global) resource. It can be found in the Azure portal on the Keys and Endpoint page.
-    location = GlobalContext.cognitive_region
+    location = GlobalContext.txt_translate_location
 
     path = '/translate'
     constructed_url = endpoint + path
