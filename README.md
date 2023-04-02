@@ -45,7 +45,7 @@ text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHINESE_CHUNK_SIZE, ch
 python ./Enterprise_KB_Chatbot.py
 ```
 2. Use local brower to access http://127.0.0.1:7860/
-3. If you want to make your application internate accessiable, change the last line code in `Enterprise_KB_Chatbot.py`
+3. If you want to make your application internet accessiable, change the last line of code in `Enterprise_KB_Chatbot.py`
 from
 ```
 demo.launch()
