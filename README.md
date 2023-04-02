@@ -24,7 +24,18 @@ TRANSLATOR_ENDPOINT=https://api.translator.azure.cn/
 ```
 
 ## Prepare VectorDB ingestion
-
+This repo has two demo documents at **Doc_Store** folder, you can replace with your enterprise documents (PDF, DOCX, PPTX are supported so far), then run following command to re-build the vector DB. 
+```
+python ./Enterprise_KB_Ingest.py
+```
+**NOTE**: If your documents are Chinese version, it's recommended to replace following line code in `Enterprise_KB_Ingest.py` before re-build vector DB.
+```
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=ENGLISH_CHUCK_SIZE, chunk_overlap=0) 
+```
+with
+```
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHINESE_CHUNK_SIZE, chunk_overlap=0) 
+```
 ## Run chatbot
 1. Run following command at your project folder
 ```
