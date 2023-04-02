@@ -74,11 +74,23 @@ and change to
 GlobalContext.ENABLE_TRANSLATION = True 
 GlobalContext.ENABLE_VOICE = True  
 ```
-run the application, you will see the web page changed to below capture (**Note** speech only works when you run the application locally)
+run the application and you will see the web page changed to below capture (**Note** speech only works when you run the application locally)
 ![image](https://user-images.githubusercontent.com/75886466/229342647-e6b60727-1476-4c00-80e0-193b87dd3a7f.png)
 
 
 ## Enable single turn Q&A
+Single turn Q&A uses [VectorDBQAWithSourcesChain](https://python.langchain.com/en/latest/_modules/langchain/chains/qa_with_sources/vector_db.html), and provide single turn question and answer experience rather than conversational chatbot, which can support some special requirement for enterprise. you use follow approach to enable
+Open `Enterprise_KB_Chatbot.py`, find following code
+```
+GlobalContext.SHOW_SINGLE_TURN_QA = False
+```
+and change to
+```
+GlobalContext.SHOW_SINGLE_TURN_QA = True  
+```
+run the application and you will see the web page append additional portion at bottom as below capture
+![image](https://user-images.githubusercontent.com/75886466/229343001-43ee9e21-acd5-48f7-b9de-b475e29df5c0.png)
+
 
 ## Interaction example for multi-turn conversation 
 ![image](https://user-images.githubusercontent.com/75886466/229332117-8b410405-007e-4a80-8d1b-ff2b4bf43bfd.png)
