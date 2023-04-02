@@ -3,7 +3,8 @@ OpenAI Enterprise knowledge search ChatBot and QA
 
 ## Installation 
 1. Install Python runtime (This repo is developed with Python 3.11.2)
-2. Install the dependencies on your machine:
+2. Download and install [Microsoft Visual C++ Redistributable packages](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170&preserve-view=true#visual-studio-2015-2017-2019-and-2022)
+3. Install the dependencies on your machine:
 ```
 pip install -r ./requirements.txt
 ```
