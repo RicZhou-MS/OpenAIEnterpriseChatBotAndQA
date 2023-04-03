@@ -47,7 +47,7 @@ text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHINESE_CHUNK_SIZE, ch
 python ./Enterprise_KB_Chatbot.py
 ```
 2. Use local brower to access http://127.0.0.1:7860/
-3. If you want to make your application internet accessiable, change the last line of code in `Enterprise_KB_Chatbot.py`
+3. If you want to make your application internet accessible, change the last line of code in `Enterprise_KB_Chatbot.py`
 from
 ```
 demo.launch()
@@ -56,7 +56,7 @@ to
 ```
 demo.launch(auth=("admin", "pass1234"), share=True)
 ```
-then run your application, get the internet accessiable url which printed on the screen, you need keep your application running locally while have others access from this public URL. ( **NOTE**: internet url only available for maximum 72 hours)
+then run your application, get the internet accessible url which printed on the screen, you need keep your application running locally while have others access from this public URL. ( **NOTE**: internet url only available for maximum 72 hours)
 
 ## How to change chain type
 This project relies on [LangChain](https://python.langchain.com/en/latest/) , you can change the [chain type](https://python.langchain.com/en/latest/modules/chains/index_examples/qa_with_sources.html) according to your needs.
