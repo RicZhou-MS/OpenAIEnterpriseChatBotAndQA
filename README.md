@@ -111,4 +111,4 @@ run the application and you will see the web page append additional portion at b
 ![image](https://user-images.githubusercontent.com/75886466/229334679-cc6941f5-07fc-4d66-a25e-0969d499fd75.png)
 ![image](https://user-images.githubusercontent.com/75886466/229334681-8460acd8-1aa7-4b7c-97fd-7c5a2d3cdf8b.png)
 
-**NOTE** : Here we can see the OpenAI model sometimes still try to answer any well-known question even we have indicated not to do so in the prompt, this is also an area of prompt improvement.
+**NOTE** : Here we can see it can return not found for most unrelated questions, but the model sometimes still try to answer some well-known questions even we have indicated not to do so in the prompt, this is also an area of prompt refinement.
