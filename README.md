@@ -31,6 +31,8 @@ This repo has two demo documents at **Doc_Store** folder, you can replace with y
 ```
 python ./Enterprise_KB_Ingest.py
 ```
+Currently the VectorDB engine is FAISS, but for enterprise production use, it can be replaced by other Vector Database engines (e.g. `qdrant, weaviate, milvus, elastic` which are all [supported by LangChain](https://langchain.com/integrations.html))
+
 **NOTE: If your documents are Chinese version, it's recommended to replace following line code in `Enterprise_KB_Ingest.py` before re-build vector DB.**
 ```
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=ENGLISH_CHUCK_SIZE, chunk_overlap=0) 
@@ -45,7 +47,7 @@ text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHINESE_CHUNK_SIZE, ch
 python ./Enterprise_KB_Chatbot.py
 ```
 2. Use local brower to access http://127.0.0.1:7860/
-3. If you want to make your application internet accessiable, change the last line of code in `Enterprise_KB_Chatbot.py`
+3. If you want to make your application internet accessible, change the last line of code in `Enterprise_KB_Chatbot.py`
 from
 ```
 demo.launch()
@@ -54,7 +56,7 @@ to
 ```
 demo.launch(auth=("admin", "pass1234"), share=True)
 ```
-then run your application, get the internet accessiable url which printed on the screen, you need keep your application running locally while have others access from this public URL. ( **NOTE**: internet url only available for maximum 72 hours)
+then run your application, get the internet accessible url which printed on the screen, you need keep your application running locally while have others access from this public URL. ( **NOTE**: internet url only available for maximum 72 hours)
 
 ## How to change chain type
 This project relies on [LangChain](https://python.langchain.com/en/latest/) , you can change the [chain type](https://python.langchain.com/en/latest/modules/chains/index_examples/qa_with_sources.html) according to your needs.
@@ -109,4 +111,4 @@ run the application and you will see the web page append additional portion at b
 ![image](https://user-images.githubusercontent.com/75886466/229334679-cc6941f5-07fc-4d66-a25e-0969d499fd75.png)
 ![image](https://user-images.githubusercontent.com/75886466/229334681-8460acd8-1aa7-4b7c-97fd-7c5a2d3cdf8b.png)
 
-**NOTE** : Here we can see the OpenAI model sometimes still try to answer any well-known question even we have indicated not to do so in the prompt, this is also an area of prompt improvement.
+**NOTE** : Here we can see it can return not found for most unrelated questions, but the model sometimes still try to answer some well-known questions even we have indicated not to do so in the prompt, this is also an area of prompt refinement.
