@@ -55,17 +55,7 @@ class MyPromptCollection:
 '''STUFF PROMPT COLLECTION'''
 # ===================================================================================================
 
-# STUFF_prompt_template = """Use the following pieces of context to answer the question at the end, if the context has nothing to do with the question, just simply say I cannot get the answer from Enterprise KB, don't give an answer even you know it but unrelated to the giving context. If the question is in different language other than English, give your answer in the same language.
-
-# {context}
-
-# Question: {question}
-# Helpful Answer:"""
-# STUFF_PROMPT = PromptTemplate(
-#     template=STUFF_prompt_template, input_variables=["context", "question"]
-# )
-
-STUFF_prompt_template = """Use the following pieces of context to answer the question at the end. If you don't know the answer, just say I cannot get the answer from Enterprise KB, don't try to make up an answer.
+STUFF_prompt_template = """Use the following pieces of context to answer the question at the end, if the context has nothing to do with the question, just simply say I cannot get the answer from Enterprise KB, don't give an answer even you know it but unrelated to the giving context. If the question is in different language other than English, give your answer in the same language.
 
 {context}
 
@@ -74,6 +64,16 @@ Helpful Answer:"""
 STUFF_PROMPT = PromptTemplate(
     template=STUFF_prompt_template, input_variables=["context", "question"]
 )
+
+# STUFF_prompt_template = """Use the following pieces of context to answer the question at the end. If you don't know the answer, just say I cannot get the answer from Enterprise KB, don't try to make up an answer.
+
+# {context}
+
+# Question: {question}
+# Helpful Answer:"""
+# STUFF_PROMPT = PromptTemplate(
+#     template=STUFF_prompt_template, input_variables=["context", "question"]
+# )
 
 STUFF_system_template = """Use the following pieces of context to answer the users question. 
 If you don't know the answer, just say that you don't know, don't try to make up an answer.
@@ -133,14 +133,25 @@ REFINE_REFINE_PROMPT_SELECTOR = ConditionalPromptSelector(
 )
 
 
+# REFINE_DEFAULT_TEXT_QA_PROMPT_TMPL = (
+#     "Context information is below. \n"
+#     "---------------------\n"
+#     "{context_str}"
+#     "\n---------------------\n"
+#     "Given the context information and not prior knowledge, "
+#     "answer the question: {question}\n"
+# )
+
 REFINE_DEFAULT_TEXT_QA_PROMPT_TMPL = (
     "Context information is below. \n"
     "---------------------\n"
     "{context_str}"
     "\n---------------------\n"
     "Given the context information and not prior knowledge, "
-    "answer the question: {question}\n"
+    "answer the question at the end. If the context has nothing to do with the question, just say that I cannot get answer from Enterprise KB, don't try to make up an answer.\n"
+    "Question: {question}\n"
 )
+
 # REFINE_DEFAULT_TEXT_QA_PROMPT_TMPL = """Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
 
 # {context_str}
