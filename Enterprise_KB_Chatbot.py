@@ -218,7 +218,7 @@ vectorstore = FAISS.load_local(GlobalContext.VECTOR_DB_PATH, OpenAIEmbeddings(ch
 
 # "text-davinci-003"
 # intialize ChatVectorDBChain
-lc_chatbot_llm = AzureOpenAI(temperature=0, deployment_name="text-davinci-003", model_name="text-davinci-003", max_tokens=800)
+lc_chatbot_llm = AzureOpenAI(temperature=0, deployment_name="text-davinci-003", model_name="text-davinci-003", max_tokens=1000)
 
 lc_chatbot = CustomConversationalRetrievalChain.from_llm(lc_chatbot_llm, vectorstore.as_retriever(
 ), condense_question_prompt=MyPromptCollection.CONDENSE_QUESTION_PROMPT, chain_type="stuff")  # stuff , map_reduce, refine, map_rerank
@@ -228,7 +228,7 @@ lc_chatbot.return_source_documents = True
 
 if GlobalContext.SHOW_SINGLE_TURN_QA:  # disabled by default
     # initialize VectorDBQAWithSourcesChain RetrievalQAWithSourcesChain
-    lc_qa_chain_llm = AzureOpenAI(temperature=0, deployment_name="text-davinci-003", model_name="text-davinci-003", max_tokens=800)
+    lc_qa_chain_llm = AzureOpenAI(temperature=0, deployment_name="text-davinci-003", model_name="text-davinci-003", max_tokens=1000)
     # lc_qa_chain = RetrievalQAWithSourcesChain.from_chain_type(lc_qa_chain_llm, chain_type="refine", retriever=vectorstore.as_retriever())  # stuff , map_reduce, refine, map_rerank
     lc_qa_chain = VectorDBQAWithSourcesChain.from_chain_type(lc_qa_chain_llm, chain_type="refine", vectorstore=vectorstore, k=3)  # stuff , map_reduce, refine, map_rerank
     lc_qa_chain.reduce_k_below_max_tokens = True
@@ -241,7 +241,7 @@ if GlobalContext.SHOW_SINGLE_TURN_QA:  # disabled by default
 with gr.Blocks() as demo:
     # chat bot section
     title = gr.Label("Azure OpenAI Enterprise KB Chatbot with Voice", label="", color="CornflowerBlue")
-    chatbot = gr.Chatbot().style(height=500)
+    chatbot = gr.Chatbot().style(height=1000)
     checkbox_for_read = gr.Checkbox(label="Read result atomatically", visible=GlobalContext.ENABLE_VOICE)
     msg = gr.Textbox(label="Type your question below or click the voice botton to say")
     with gr.Row():
@@ -301,4 +301,6 @@ with gr.Blocks() as demo:
     slider_top_p.change(lambda x: change_Openai_param("top_p", x), slider_top_p, None)
 
 # demo.launch(auth=("admin", "pass1234"), share=True)
+# demo.launch(server_name="0.0.0.0", server_port=1870)
+gr.State()
 demo.launch()

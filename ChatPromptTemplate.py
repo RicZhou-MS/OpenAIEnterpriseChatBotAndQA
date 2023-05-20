@@ -25,7 +25,7 @@ from langchain.output_parsers.regex import RegexParser
 # Follow Up Input: {question}
 # Standalone question:"""
 
-rz_condense_prompt_template = """Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question. If the follow up question is disconnected with the conversation, return the original question directly without any modification or translation.
+rz_condense_prompt_template = """Given the following conversation and a follow-up question, rephrase the follow-up question to be a standalone question. If the follow-up question is disconnected from the conversation, return the original question without any modification.
 
 Chat History:
 {chat_history}
@@ -55,7 +55,18 @@ class MyPromptCollection:
 '''STUFF PROMPT COLLECTION'''
 # ===================================================================================================
 
-STUFF_prompt_template = """Use the following pieces of context to answer the question at the end, if the context has nothing to do with the question, just simply say I cannot get the answer from Enterprise KB, don't give an answer even you know it but unrelated to the giving context. If the question is in different language other than English, give your answer in the same language.
+# STUFF_prompt_template = """Answer the question as truthfully as possible using the provided context, and if the answer is not contained within the text, just simply say "I cannot get the answer from Enterprise KB", don't try to make up an answer. If the question is in different language other than English, give your answer in the same language.
+
+# {context}
+
+# Question: {question}
+# Helpful Answer:"""
+# STUFF_PROMPT = PromptTemplate(
+#     template=STUFF_prompt_template, input_variables=["context", "question"]
+# )
+
+
+STUFF_prompt_template = """Use the following context to answer the question at the end, if the context has nothing to do with the question, just simply say I cannot get the answer from Enterprise KB, don't give an answer even you know it but unrelated to the giving context. If the question is in a language other than English, provide the answer in that language.
 
 {context}
 
@@ -75,8 +86,8 @@ STUFF_PROMPT = PromptTemplate(
 #     template=STUFF_prompt_template, input_variables=["context", "question"]
 # )
 
-STUFF_system_template = """Use the following pieces of context to answer the users question. 
-If you don't know the answer, just say that you don't know, don't try to make up an answer.
+STUFF_system_template = """Use the following context to answer the users question. 
+If you don't know the answer, just say that you don't know, don't try to make up an answer. If the question is in a language other than English, provide the answer in that language.
 ----------------
 {context}"""
 STUFF_messages = [
@@ -104,7 +115,7 @@ REFINE_DEFAULT_REFINE_PROMPT_TMPL = (
     "{context_str}\n"
     "------------\n"
     "Given the new context, refine the original answer to better "
-    "answer the question."
+    "answer the question. If the question is in a language other than English, provide the answer in that language."
     "If the context isn't useful, return the original answer."
 )
 REFINE_DEFAULT_REFINE_PROMPT = PromptTemplate(
@@ -118,7 +129,7 @@ REFINE_refine_template = (
     "{context_str}\n"
     "------------\n"
     "Given the new context, refine the original answer to better "
-    "answer the question. "
+    "answer the question. If the question is in a language other than English, provide the answer in that language."
     "If the context isn't useful, return the original answer."
 )
 REFINE_messages = [
@@ -148,7 +159,7 @@ REFINE_DEFAULT_TEXT_QA_PROMPT_TMPL = (
     "{context_str}"
     "\n---------------------\n"
     "Given the context information and not prior knowledge, "
-    "answer the question at the end. If the context has nothing to do with the question, just say that I cannot get answer from Enterprise KB, don't try to make up an answer.\n"
+    "answer the question at the end. If the context has nothing to do with the question, just say that I cannot get answer from Enterprise KB, don't try to make up an answer. If the question is in a language other than English, provide the answer in that language.\n"
     "Question: {question}\n"
 )
 
@@ -167,7 +178,7 @@ REFINE_chat_qa_prompt_template = (
     "{context_str}"
     "\n---------------------\n"
     "Given the context information and not prior knowledge, "
-    "answer any questions"
+    "answer any questions, if the question is in a language other than English, provide the answer in that language."
 )
 REFINE_messages = [
     SystemMessagePromptTemplate.from_template(REFINE_chat_qa_prompt_template),
@@ -253,7 +264,7 @@ MAP_REDUCE_QUESTION_PROMPT_SELECTOR = ConditionalPromptSelector(
 # )
 
 
-MAP_REDUCE_combine_prompt_template = """Given the following pieces of context to answer the question at the end. If you don't know the answer, just simply say I cannot get the answer from Enterprise KB, don't try to make up an answer.
+MAP_REDUCE_combine_prompt_template = """Given the following pieces of context to answer the question at the end. If you don't know the answer, just simply say I cannot get the answer from Enterprise KB, don't try to make up an answer. If the question is in a language other than English, provide the answer in that language.
 
 QUESTION: {question}
 =========
@@ -290,7 +301,7 @@ MAP_RERANK_output_parser = RegexParser(
     output_keys=["answer", "score"],
 )
 
-MAP_RERANK_prompt_template = """Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer.
+MAP_RERANK_prompt_template = """Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer. If the question is in a language other than English, provide the answer in that language.
 
 In addition to giving an answer, also return a score of how fully it answered the user's question. This should be in the following format:
 
