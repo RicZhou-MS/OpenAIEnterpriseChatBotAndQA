@@ -3,7 +3,7 @@
 # docker run -it --name ent-chatbot-azure-openai -p80:80 rz-ent-chatbot-azure-openai:0.1
 
 # "login to Azure Container Registry"
-# docker login acr0612.azurecr.cn
+# docker login -u <user> -p <password> acr0612.azurecr.cn
 # "create a new tag for a Docker image with repository name"
 # docker tag rz-ent-chatbot-azure-openai:0.1 acr0612.azurecr.cn/rz-ent-chatbot-azure-openai:0.1
 # "push a Docker image to a container registry"
