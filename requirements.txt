@@ -1,9 +1,9 @@
-gradio==3.24.1
+gradio
 langchain==0.0.129
-pydantic==1.10.7
-python-dotenv==1.0.0
-requests==2.28.2
-tiktoken==0.3.2
+pydantic
+python-dotenv
+requests
+tiktoken
 azure-cognitiveservices-speech
 openai
 faiss-cpu
