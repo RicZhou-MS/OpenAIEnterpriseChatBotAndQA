@@ -66,7 +66,7 @@ class MyPromptCollection:
 # )
 
 
-STUFF_prompt_template = """Use the following context to answer the question at the end, if the context has nothing to do with the question, just simply say I cannot get the answer from Enterprise KB, don't give an answer even you know it but unrelated to the giving context. If the question is in a language other than English, provide the answer in that language.
+STUFF_prompt_template = """Use the following context to answer the question at the end, if the context has nothing to do with the question, just simply say I cannot get the answer from Enterprise KB, don't give an answer even you know it but unrelated to the giving context. Please do provide the answer using the language in which the question was presented.
 
 {context}
 
@@ -87,7 +87,7 @@ STUFF_PROMPT = PromptTemplate(
 # )
 
 STUFF_system_template = """Use the following context to answer the users question. 
-If you don't know the answer, just say that you don't know, don't try to make up an answer. If the question is in a language other than English, provide the answer in that language.
+If you don't know the answer, just say that you don't know, don't try to make up an answer. Please do provide the answer using the language in which the question was presented.
 ----------------
 {context}"""
 STUFF_messages = [
@@ -115,7 +115,7 @@ REFINE_DEFAULT_REFINE_PROMPT_TMPL = (
     "{context_str}\n"
     "------------\n"
     "Given the new context, refine the original answer to better "
-    "answer the question. If the question is in a language other than English, provide the answer in that language."
+    "answer the question. If the question is in English, please *must* provide the answer in English, otherwise, please *do* provide the answer in the same language as the question was presented."
     "If the context isn't useful, return the original answer."
 )
 REFINE_DEFAULT_REFINE_PROMPT = PromptTemplate(
@@ -129,7 +129,7 @@ REFINE_refine_template = (
     "{context_str}\n"
     "------------\n"
     "Given the new context, refine the original answer to better "
-    "answer the question. If the question is in a language other than English, provide the answer in that language."
+    "answer the question. If the question is in English, please *must* provide the answer in English, otherwise, please *do* provide the answer in the same language as the question was presented."
     "If the context isn't useful, return the original answer."
 )
 REFINE_messages = [
@@ -159,7 +159,7 @@ REFINE_DEFAULT_TEXT_QA_PROMPT_TMPL = (
     "{context_str}"
     "\n---------------------\n"
     "Given the context information and not prior knowledge, "
-    "answer the question at the end. If the context has nothing to do with the question, just say that I cannot get answer from Enterprise KB, don't try to make up an answer. If the question is in a language other than English, provide the answer in that language.\n"
+    "answer the question at the end. If the question is in English, please *must* provide the answer in English, otherwise, please *do* provide the answer in the same language as the question was presented. If the context has nothing to do with the question, just say that I cannot get answer from Enterprise KB, don't try to make up an answer. \n"
     "Question: {question}\n"
 )
 
@@ -178,7 +178,7 @@ REFINE_chat_qa_prompt_template = (
     "{context_str}"
     "\n---------------------\n"
     "Given the context information and not prior knowledge, "
-    "answer any questions, if the question is in a language other than English, provide the answer in that language."
+    "answer any questions, If the question is in English, please *must* provide the answer in English, otherwise, please *do* provide the answer in the same language as the question was presented."
 )
 REFINE_messages = [
     SystemMessagePromptTemplate.from_template(REFINE_chat_qa_prompt_template),
@@ -264,7 +264,7 @@ MAP_REDUCE_QUESTION_PROMPT_SELECTOR = ConditionalPromptSelector(
 # )
 
 
-MAP_REDUCE_combine_prompt_template = """Given the following pieces of context to answer the question at the end. If you don't know the answer, just simply say I cannot get the answer from Enterprise KB, don't try to make up an answer. If the question is in a language other than English, provide the answer in that language.
+MAP_REDUCE_combine_prompt_template = """Given the following pieces of context to answer the question at the end. If you don't know the answer, just simply say I cannot get the answer from Enterprise KB, don't try to make up an answer. Please do provide the answer using the language in which the question was presented.
 
 QUESTION: {question}
 =========
@@ -301,7 +301,7 @@ MAP_RERANK_output_parser = RegexParser(
     output_keys=["answer", "score"],
 )
 
-MAP_RERANK_prompt_template = """Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer. If the question is in a language other than English, provide the answer in that language.
+MAP_RERANK_prompt_template = """Use the following pieces of context to answer the question at the end. If you don't know the answer, just say that you don't know, don't try to make up an answer. Please do provide the answer using the language in which the question was presented.
 
 In addition to giving an answer, also return a score of how fully it answered the user's question. This should be in the following format:
 
