@@ -38,7 +38,7 @@ class GlobalContext:
     chat_history = []
     KEEP_CHAT_HISTORY_TURN = 3
     chat_prompt = ""
-    TOTAL_TOKENS_LIMIT_OF_ALL_DOCS_FOR_CHAIN = 2100  # 3050
+    TOTAL_TOKENS_LIMIT_OF_ALL_DOCS_FOR_CHAIN = 3050
     chat_latest_return = ""
     message_for_read_out = ""
     user_message = ""

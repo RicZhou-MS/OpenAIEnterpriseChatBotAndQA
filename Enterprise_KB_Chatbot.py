@@ -10,6 +10,8 @@ from langchain.chains import (VectorDBQAWithSourcesChain, ConversationalRetrieva
 from langchain.vectorstores import FAISS
 from langchain.embeddings import OpenAIEmbeddings
 import gradio as gr
+from gradio.themes.base import Base
+from gradio.themes.utils import colors, sizes
 import os
 from dotenv import load_dotenv
 from CommonHelper import *
@@ -202,8 +204,8 @@ def change_Openai_param(param_name, value):
 load_dotenv()
 GlobalContext()  # initialize global context
 
-GlobalContext.ENABLE_TRANSLATION = False  # you need to provide Azure Translator API key at GlobalContext before enable this feature
-GlobalContext.ENABLE_VOICE = False  # you need to provide Azure Speech API key at GlobalContext before enable this feature
+GlobalContext.ENABLE_TRANSLATION = True  # you need to provide Azure Translator API key at GlobalContext before enable this feature
+GlobalContext.ENABLE_VOICE = True  # you need to provide Azure Speech API key at GlobalContext before enable this feature
 GlobalContext.SHOW_SINGLE_TURN_QA = False  # show single turn QA interactive UI
 
 os.environ["OPENAI_API_TYPE"] = "azure"
@@ -218,17 +220,17 @@ vectorstore = FAISS.load_local(GlobalContext.VECTOR_DB_PATH, OpenAIEmbeddings(ch
 
 # "text-davinci-003"
 # intialize ChatVectorDBChain
-lc_chatbot_llm = AzureOpenAI(temperature=0, deployment_name="text-davinci-003", model_name="text-davinci-003", max_tokens=1000)
+lc_chatbot_llm = AzureOpenAI(temperature=0, deployment_name="davinci", model_name="text-davinci-003", max_tokens=1000)
 
 lc_chatbot = CustomConversationalRetrievalChain.from_llm(lc_chatbot_llm, vectorstore.as_retriever(
-), condense_question_prompt=MyPromptCollection.CONDENSE_QUESTION_PROMPT, chain_type="stuff")  # stuff , map_reduce, refine, map_rerank
+), condense_question_prompt=MyPromptCollection.CONDENSE_QUESTION_PROMPT, chain_type="refine")  # stuff , map_reduce, refine, map_rerank
 # lc_chatbot.top_k_docs_for_context = 3
 lc_chatbot.max_tokens_limit = GlobalContext.TOTAL_TOKENS_LIMIT_OF_ALL_DOCS_FOR_CHAIN  # only take effect on 'stuff' and 'refine' chain type
 lc_chatbot.return_source_documents = True
 
 if GlobalContext.SHOW_SINGLE_TURN_QA:  # disabled by default
     # initialize VectorDBQAWithSourcesChain RetrievalQAWithSourcesChain
-    lc_qa_chain_llm = AzureOpenAI(temperature=0, deployment_name="text-davinci-003", model_name="text-davinci-003", max_tokens=1000)
+    lc_qa_chain_llm = AzureOpenAI(temperature=0, deployment_name="davinci", model_name="text-davinci-003", max_tokens=1000)
     # lc_qa_chain = RetrievalQAWithSourcesChain.from_chain_type(lc_qa_chain_llm, chain_type="refine", retriever=vectorstore.as_retriever())  # stuff , map_reduce, refine, map_rerank
     lc_qa_chain = VectorDBQAWithSourcesChain.from_chain_type(lc_qa_chain_llm, chain_type="refine", vectorstore=vectorstore, k=3)  # stuff , map_reduce, refine, map_rerank
     lc_qa_chain.reduce_k_below_max_tokens = True
@@ -238,17 +240,30 @@ if GlobalContext.SHOW_SINGLE_TURN_QA:  # disabled by default
 # Spin up web GUI
 
 # with gr.Blocks(theme=gr.themes.Glass()) as demo:
-with gr.Blocks() as demo:
+theme = gr.themes.Default(text_size=sizes.text_lg,primary_hue=colors.blue,secondary_hue=colors.orange)
+swtichdarkscript = """
+async () => {
+  gradioURL = window.location.href
+  if (!gradioURL.endsWith('?__theme=dark')) {
+    window.location.replace(gradioURL + '?__theme=dark');
+  }
+  else{
+    window.location.replace(gradioURL.replace("?__theme=dark", ""));
+  }
+}
+"""
+with gr.Blocks(theme=theme) as demo:
     # chat bot section
-    title = gr.Label("Azure OpenAI Enterprise KB Chatbot with Voice", label="", color="CornflowerBlue")
-    chatbot = gr.Chatbot().style(height=1000)
+    title = gr.Button("Azure OpenAI Enterprise KB Chatbot with Voice") #, label="", color="CornflowerBlue")
+    chatbot = gr.Chatbot().style(height=600)
     checkbox_for_read = gr.Checkbox(label="Read result atomatically", visible=GlobalContext.ENABLE_VOICE)
     msg = gr.Textbox(label="Type your question below or click the voice botton to say")
     with gr.Row():
         clear = gr.Button("Clear")
         clear_and_move_to_history = gr.Button("Clear with Backup", visible=GlobalContext.SHOW_CHAT_BACKUP_AND_SETTINGS)
     with gr.Row(visible=GlobalContext.ENABLE_VOICE):
-        radio = gr.Radio(["Say Chinese", "Say English", "Say Chinese output English", "Say English output Chinese"], value="Say Chinese", label="Voice setting")
+        #radio = gr.Radio(["Say Chinese", "Say English", "Say Chinese output English", "Say English output Chinese"], value="Say Chinese", label="Voice setting")
+        radio = gr.Radio(["Say Chinese", "Say English"], value="Say Chinese", label="Voice setting")
         record_button = gr.Button("Click Here to Say")
 
     # single turn QA section
@@ -280,6 +295,7 @@ with gr.Blocks() as demo:
                 bt_update_system_message = gr.Button("Update System Message", interactive=False)
 
     # GUI event handlers
+    title.click(None,None,None,_js=swtichdarkscript)
     msg.submit(chat_set_msg, [msg, chatbot], chatbot, queue=False).then(chat_set_bot, chatbot, [msg, chatbot]).then(readOuput, None, record_button)
     clear.click(clearHistory, None, chatbot, queue=False)
     clear_and_move_to_history.click(clearHistory_and_backup, chatbot, [chatbot, last_round_chatbot], queue=False)
@@ -300,7 +316,9 @@ with gr.Blocks() as demo:
     slider_max_token.change(lambda x: change_Openai_param("max_tokens", x), slider_max_token, None)
     slider_top_p.change(lambda x: change_Openai_param("top_p", x), slider_top_p, None)
 
-# demo.launch(auth=("admin", "pass1234"), share=True)
-# demo.launch(server_name="0.0.0.0", server_port=1870)
+
 gr.State()
-demo.launch()
+#demo.launch()
+# demo.launch(auth=("admin", "pass1234"), share=True)
+demo.launch(server_name="0.0.0.0", server_port=80)
+# dark theme:  http://localhost/?__theme=dark

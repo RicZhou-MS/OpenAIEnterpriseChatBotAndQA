@@ -22,7 +22,11 @@ from langchain.chains.conversational_retrieval.base import BaseConversationalRet
 from langchain.chains.llm import LLMChain
 
 from langchain.prompts.base import BasePromptTemplate
-from langchain.schema import BaseLanguageModel, BaseRetriever, Document
+
+#from langchain.schema import BaseLanguageModel, BaseRetriever, Document
+from langchain.schema import BaseRetriever, Document
+from langchain.base_language import BaseLanguageModel
+
 # from langchain.vectorstores.base import VectorStore
 from Custom_load_qa_chain import custom_load_qa_chain
 from CommonHelper import *

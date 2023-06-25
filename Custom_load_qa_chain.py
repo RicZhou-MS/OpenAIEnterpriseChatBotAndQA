@@ -18,7 +18,9 @@ from langchain.chains.question_answering import (
     stuff_prompt,
 )
 from langchain.prompts.base import BasePromptTemplate
-from langchain.schema import BaseLanguageModel
+#from langchain.schema import BaseLanguageModel
+from langchain.base_language import BaseLanguageModel
+
 from ChatPromptTemplate import *
 
 
